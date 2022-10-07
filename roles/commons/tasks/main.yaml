@@ -1,2 +1,10 @@
 - name: Comprueba si el sistema está actualizado
   apt: update_cache=yes upgrade=yes
+
+- name: Copiar clave publica
+  ansible.posix.authorized_key:
+    user: vagrant
+    state: present
+    key: "{{ lookup('file', '/home/carlos/.ssh/id_rsa.pub') }}"
+    path: /home/vagrant/.ssh/authorized_keys
+    manage_dir: False
